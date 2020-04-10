@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Double N">
+        <meta name="description" content="Bangkitkan bilangan acak antara range tertentu.">
+
+        
+        <title>undian</title>
+
+        
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+       
+    </head>
+  
+    <body>{
+     
+        <div class="container"><center>
+            <div class="page-header">
+                <h1>Kocokan Nomor Undian</h1>
+            </div>
+
+            <div class="well">
+                <form class="form-inline" id="frmAngka" method="post" action="index.html">
+                    <div class="form-group">
+                        <label for="txtAwal">Angka Pertama</label>
+                        <input type="number" class="form-control" id="txtAwal" placeholder="Angka awal" min="1" value="1">
+                    </div>                    
+                    <div class="form-group">
+                        <label for="txtAkhir">Angka Terakhir</label>
+                        <input type="number" class="form-control" id="txtAkhir" placeholder="Angka akhir" min="1" value="69">
+                    </div>  
+                    <button type="submit" class="btn btn-success" id="btnAcak" onclick="mulai()">Kocok</button>                  
+                </form>
+            </div>
+
+            <div class="jumbotron">
+                <h1 id="lblAngka">0</h1>
+                <button type="submit" class="btn btn-lg btn-success" id="btnBerhenti" disabled>Setop!!</button>                  
+            </div> 
+            <h4>Harap Kocokan nomor ini tidak disalah gunakan seperti untuk togel dan lain lain, haram woi!!</h4>
+        </center></div>
+
+        
+        <script src="js/jquery.min.js"></script>
+
+        
+        <script src="js/bootstrap.min.js"></script>
+
+        
+        <script src="js/validator.min.js"></script>
+
+        <script type="text/javascript">
+            var awal = 1;       
+            var akhir= 100;     
+            var jalan = false;  
+
+            
+            $('#btnAcak').click(function() {
+                if($.trim($('#txtAwal').val()) == '')       
+                    alert('Angka awal harus diisi!');
+                else if($.trim($('#txtAkhir').val()) == '') 
+                    alert('Angka akhir harus diisi!');
+                else {
+                    
+                    awal = parseInt($("#txtAwal")[0].value);
+                    $("#txtAwal").prop('disabled', true);
+                    
+                    akhir = parseInt($("#txtAkhir")[0].value);
+                    $("#txtAkhir").prop('disabled', true);
+                    
+                    $("#btnAcak").prop('disabled', true);
+                    
+                    $("#btnBerhenti").prop('disabled', false);
+                    
+                    $("#lblAngka").text(angkaAcak());
+                    
+                    jalan = true;
+                    setTimeout('ubahAngkaAcak()', 10); 
+                                                        
+                }
+                return false;
+            });
+            
+            
+            $('#btnBerhenti').click(function() {
+                
+                jalan = false;
+                return false;
+            });
+
+            
+            function angkaAcak() {
+                return Math.floor(Math.random() * (akhir - awal + 1) + awal);
+            }
+
+            
+            function ubahAngkaAcak() {
+                if (jalan == true) {
+                    
+                    $("#lblAngka").text(angkaAcak());
+                    setTimeout('ubahAngkaAcak()', 50);
+                }
+                else {
+                    
+                    $("#btnBerhenti").prop('disabled', true);
+                    $("#btnAcak").prop('disabled', false);
+                    $("#txtAkhir").prop('disabled', false);
+                    $("#txtAwal").prop('disabled', false);
+                }
+            }
+        </script>
+
+    </body>
+</html>
